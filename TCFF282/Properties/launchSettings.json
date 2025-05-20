@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TCFF282": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
