@@ -9,10 +9,10 @@ services:
     ports: # remover porta do mysql pois só foi gerada para visualização
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: fiap-teste
-      MYSQL_DATABASE: fiap
-      MYSQL_USER: fiap
-      MYSQL_PASSWORD: teste-123
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
       - "./scripts/ini.sql:/docker-entrypoint-initdb.d/ini.sql"
@@ -25,7 +25,7 @@ services:
     ports: # porta da aplicação após decisão alterar
       - 5000:80
     environment:
-      MYSQL_DB_HOST: mysql:3306
-      MYSQL_DB_USER: fiap
-      MYSQL_DB_PASSWORD: teste-123
-      MYSQL_DB_NAME: fiap
+      MYSQL_DB_HOST: ${MYSQL_DB_HOST}
+      MYSQL_DB_USER: ${MYSQL_DB_USER}
+      MYSQL_DB_PASSWORD: ${MYSQL_DB_PASSWORD}
+      MYSQL_DB_NAME: ${MYSQL_DB_NAME}
