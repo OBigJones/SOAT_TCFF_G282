@@ -2,12 +2,15 @@
 
 # Esta fase é usada durante a execução no VS no modo rápido (Padrão para a configuração de Depuração)
 FROM mcr.microsoft.com/dotnet/runtime:8.0-alpine AS base
-USER $APP_UID
+#RUN adduser --disabled-password --gecos "" fiap
+#USER fiap
 WORKDIR /app
 
 
 # Esta fase é usada para compilar o projeto de serviço
 FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
+#falta deixar as variaveis dinamicas e do docker compose tambem
+#lembrar que o mysql não precisa de usuario pois sera removido seu acesso ao mundo esterno
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Domain.csproj", "."]
