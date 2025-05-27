@@ -10,8 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Repository\" />
+    <Folder Include="Data\" />
+    <Folder Include="Pag\" />
   </ItemGroup>
 
 </Project>
