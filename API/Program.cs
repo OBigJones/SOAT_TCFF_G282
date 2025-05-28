@@ -1,3 +1,4 @@
+using Application.Extensions;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,9 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "MCDONALDO", Version = "v1" });
 });
 
+// Injections
+builder.Services.AddDependencies();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,6 +26,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseAuthorization();
 
