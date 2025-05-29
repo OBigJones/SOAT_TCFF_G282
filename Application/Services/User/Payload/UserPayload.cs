@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Application.Services.User.Payload
 {
@@ -14,6 +9,6 @@ namespace Application.Services.User.Payload
         [Required]
         public string Email { get; set; }
         [Required]
-        public string Document { get; set; }
+        public string CPF { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace API.Controllers
         private IConfiguration _configuration;
         private IUserService _userService;
 
-        public UserController (IConfiguration configuration, IUserService userService)
+        public UserController(IConfiguration configuration, IUserService userService)
         {
             _configuration = configuration;
             _userService = userService;
