@@ -1,13 +1,15 @@
+using Application.Services.User.Payload;
 using AutoMapper;
+using Domain.Entities;
 
 namespace Application.Services.User.Mappers
 {
-    public class UserProfile : Profile
+    public class UserMapper : Profile
     {
-        public UserProfile()
+        public UserMapper()
         {
-            CreateMap<User, UserPayload>();
-            CreateMap<UserPayload, User>();
+            CreateMap<UserEntity, UserPayload>();
+            CreateMap<UserPayload, UserEntity>();
         }
     }
 }

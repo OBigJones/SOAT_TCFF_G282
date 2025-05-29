@@ -1,14 +1,13 @@
-using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Data
 {
     public class AppDbContext : DbContext
     {
 
-        public AppDbContext(DDbContext<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<User> Users { get; set; }
-
+        public DbSet<UserEntity> Users { get; set; }
     }
 }

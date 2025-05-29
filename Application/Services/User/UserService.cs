@@ -1,10 +1,7 @@
 ﻿using Application.Repository;
 using Application.Services.User.Payload;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
+using Domain.Entities;
 
 namespace Application.Services.User
 {
@@ -21,11 +18,11 @@ namespace Application.Services.User
 
         public async Task<bool> CreateAccountAsync(UserPayload user)
         {
-            var userAlreadyExists = await _userRepository.VerifyUserExistsByDocument(user.Document);
+            var userAlreadyExists = await _userRepository.VerifyUserExistsByDocument(user.CPF);
             if (userAlreadyExists)
                 return false;
 
-            return await _userRepository.CreateAccountAsync(_mapper.Map<User>(clienteEntity));
+            return await _userRepository.CreateAccountAsync(_mapper.Map<UserEntity>(user));
         }
     }
 }

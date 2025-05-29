@@ -1,11 +1,13 @@
 using Application.Extensions;
+using Infra.Data.Extensions;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddInfrastruture(builder.configuration);
 builder.Services.AddControllers();
+builder.Services.AddInfraData(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(Program));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -15,7 +17,6 @@ builder.Services.AddSwaggerGen(c =>
 
 // Injections
 builder.Services.AddDependencies();
-builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
