@@ -10,19 +10,22 @@ namespace Application.Services.User
 {
     public class UserService : IUserService
     {
-        // private IUserRepository _userRepository;
-        public UserService()//IUserRepository userRepository)
+        private IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
-            // _userRepository = userRepository;
+            _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         public async Task<bool> CreateAccountAsync(UserPayload user)
         {
-            var userAlreadyExists = true;// await _userRepository.VerifyUserExistsByDocument(user.Document);
+            var userAlreadyExists = await _userRepository.VerifyUserExistsByDocument(user.Document);
             if (userAlreadyExists)
                 return false;
 
-            return true;// await _userRepository.CreateAccountAsync(user);
+            return await _userRepository.CreateAccountAsync(_mapper.Map<User>(clienteEntity));
         }
     }
 }
