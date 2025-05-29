@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("v{api-version:apiVersion}/[controller]")]
-    [ApiVersion("1.0")]
+    [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
