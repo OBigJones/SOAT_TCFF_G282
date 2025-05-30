@@ -1,14 +1,10 @@
 ﻿using Application.Services.User.Payload;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services.User
 {
     public interface IUserService
     {
         Task<bool> CreateAccountAsync(UserPayload user);
+        Task<UserPayload> IdentificationAsync(UserPayload user);
     }
 }

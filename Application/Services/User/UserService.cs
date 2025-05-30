@@ -24,5 +24,14 @@ namespace Application.Services.User
 
             return await _userRepository.CreateAccountAsync(_mapper.Map<UserEntity>(user));
         }
+
+        public async Task<UserPayload> IdentificationAsync(UserPayload user)
+        {
+            var userEntity = await _userRepository.IdentificationAsync(_mapper.Map<UserEntity>(user));
+            if (userEntity == null)
+                return null;
+
+            return _mapper.Map<UserPayload>(userEntity);
+        }
     }
 }

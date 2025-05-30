@@ -7,5 +7,7 @@ namespace Application.Repository
         Task<bool> CreateAccountAsync(UserEntity user);
 
         Task<bool> VerifyUserExistsByDocument(string document);
+
+        Task<UserEntity> IdentificationAsync(UserEntity user);
     }
 }
