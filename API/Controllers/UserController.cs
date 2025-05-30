@@ -28,11 +28,20 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpPost("Login")]
-        public Task Login([FromBody] UserPayload user)
+        [HttpPost("Identification")]
+        public Task<string> Login([FromBody] UserPayload user)
         {
-            // Logic to log in a user
-            return Task.CompletedTask;
+            if (user == null || string.IsNullOrEmpty(user.CPF))
+            {
+                return Task.FromResult("Invalid user data.");
+            }
+            var userPayload = _userService.IdentificationAsync(user);
+            if (userPayload.Result == null)
+            {
+                return Task.FromResult("User not found.");
+            }
+
+            return Task.FromResult(userPayload.Result.Name);
         }
     }
 }

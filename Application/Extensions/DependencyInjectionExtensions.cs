@@ -1,11 +1,6 @@
-﻿using Application.Repository;
+﻿using Application.Services.Order;
 using Application.Services.User;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Extensions
 {
@@ -14,7 +9,7 @@ namespace Application.Extensions
         public static IServiceCollection AddDependencies(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
-            // services.AddSingleton<IUserRepository>();
+            services.AddScoped<IOrderService, OrderService>();
             return services;
         }
     }
