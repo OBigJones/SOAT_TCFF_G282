@@ -10,5 +10,6 @@ namespace Infra.Data
 
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<OrderEntity> Orders { get; set; }
+        
     }
 }

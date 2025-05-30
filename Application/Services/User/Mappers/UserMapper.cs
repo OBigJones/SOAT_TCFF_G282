@@ -1,15 +1,28 @@
 using Application.Services.User.Payload;
-using AutoMapper;
 using Domain.Entities;
 
 namespace Application.Services.User.Mappers
 {
-    public class UserMapper : Profile
+    public static class UserMapper
     {
-        public UserMapper()
+        public static UserPayload ToPayload(UserEntity entity)
         {
-            CreateMap<UserEntity, UserPayload>();
-            CreateMap<UserPayload, UserEntity>();
+            return new UserPayload
+            {
+                Name = entity.Nome,
+                CPF = entity.CPF,
+                Email = entity.Email
+            };
+        }
+
+        public static UserEntity ToEntity(UserPayload payload)
+        {
+            return new UserEntity
+            {
+                Nome = payload.Name,
+                CPF = payload.CPF,
+                Email = payload.Email
+            };
         }
     }
 }
