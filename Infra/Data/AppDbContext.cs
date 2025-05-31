@@ -34,9 +34,6 @@ namespace Infra.Data
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<BurgerEntity>().HasBaseType<ProductBase>();
-            modelBuilder.Entity<BeverageEntity>().HasBaseType<ProductBase>();
-            modelBuilder.Entity<DessertEntity>().HasBaseType<ProductBase>();
         }
         
     }
