@@ -1,6 +1,7 @@
 ﻿using Application.Repository;
 using Application.Services.User.Mappers;
 using Application.Services.User.Payload;
+using Application.Services.Utils;
 
 namespace Application.Services.User
 {
@@ -8,16 +9,20 @@ namespace Application.Services.User
     {
         public async Task<bool> CreateAccountAsync(UserPayload user)
         {
+            bool isCpf = CPFUtils.IsCpf(user.CPF);
+            if(!isCpf)
+                throw new ArgumentException($"CPF invalido!");
+
             var userAlreadyExists = await userRepository.VerifyUserExistsByDocument(user.CPF);
             if (userAlreadyExists)
-                return false;
+                throw new ArgumentException("Usuário já existe!");
 
             return await userRepository.CreateAccountAsync(UserMapper.ToEntity(user));
         }
 
-        public async Task<UserPayload?> IdentificationAsync(UserPayload user)
+        public async Task<UserPayload?> IdentificationAsync(string cpf)
         {
-            var userEntity = await userRepository.IdentificationAsync(UserMapper.ToEntity(user));
+            var userEntity = await userRepository.IdentificationAsync(cpf);
             if (userEntity == null)
                 return null;
 
