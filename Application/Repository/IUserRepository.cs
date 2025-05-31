@@ -8,6 +8,6 @@ namespace Application.Repository
 
         Task<bool> VerifyUserExistsByDocument(string document);
 
-        Task<UserEntity> IdentificationAsync(UserEntity user);
+        Task<UserEntity?> IdentificationAsync(UserEntity user);
     }
 }

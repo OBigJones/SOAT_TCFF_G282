@@ -12,10 +12,10 @@ namespace Domain.Entities
         [Key]
         public long Id { get; init; }
         public string OrderCode { get; init; } = GenerateOrderCode();
-        public string UserName { get; set; }
-        public List<ProductBase> BurgerList { get; set; }
-        public List<ProductBase> Beverages { get; set; }
-        public List<ProductBase> Desserts { get; set; }
+        public UserEntity? User { get; set; }
+        public List<BurgerEntity> BurgerList { get; set; }
+        public List<BeverageEntity> Beverages { get; set; }
+        public List<DessertEntity> Desserts { get; set; }
         public decimal TotalPrice { get; set; }
         public string Status { get; set; } // e.g., "Pending", "Completed", "Cancelled"
         public DateTime Expiration { get; init; } = DateTime.UtcNow.AddHours(1); // Order expires in 1 hour
