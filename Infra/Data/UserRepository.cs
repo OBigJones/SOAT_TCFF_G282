@@ -28,9 +28,9 @@ namespace Infra.Data
             return await _context.Users.AnyAsync(u => u.CPF == document);
         }
 
-        public async Task<UserEntity?> IdentificationAsync(UserEntity user)
+        public async Task<UserEntity?> IdentificationAsync(string document)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.CPF == user.CPF);
+            return await _context.Users.FirstOrDefaultAsync(u => u.CPF == document);
         }
     }
 }

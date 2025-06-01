@@ -4,44 +4,39 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("[controller]")]
+    [Route("users")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IConfiguration _configuration;
         private IUserService _userService;
 
-        public UserController(IConfiguration configuration, IUserService userService)
+        public UserController(IUserService userService)
         {
-            _configuration = configuration;
             _userService = userService;
         }
 
-        [HttpPost("CreateAccount")]
+        [HttpPost]
         public IActionResult CreateAccount([FromBody] UserPayload user)
         {
             var result = _userService.CreateAccountAsync(user);
-            if (result == null || !result.Result)
-            {
+            if (!result.Result)
                 return BadRequest();
-            }   
+
             return Ok();
         }
 
-        [HttpPost("Identification")]
-        public Task<string> Login([FromBody] UserPayload user)
+        [HttpGet("{cpf}")]
+        public async Task<IActionResult> GetUserByIdentification([FromRoute] string cpf)
         {
-            if (user == null || string.IsNullOrEmpty(user.CPF))
-            {
-                return Task.FromResult("Invalid user data.");
-            }
-            var userPayload = _userService.IdentificationAsync(user);
-            if (userPayload.Result == null)
-            {
-                return Task.FromResult("User not found.");
-            }
+            if (string.IsNullOrEmpty(cpf))
+                return BadRequest("CPF não pode ser vazio.");
 
-            return Task.FromResult(userPayload.Result.Name);
+            var payload = await _userService.IdentificationAsync(cpf);
+
+            if (payload == null)
+                return NotFound("Usuário não encontrado.");
+
+            return Ok(payload);
         }
     }
 }
