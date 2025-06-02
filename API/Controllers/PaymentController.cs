@@ -26,11 +26,11 @@ public class PaymentController : ControllerBase
         }
         var result = _paymentService.GenerateQrCode(orderCode);
 
-        return Ok(result);
+        return Ok(result.Result);
     }
 
     [HttpPost("{orderCode}/payed")]
-    public IActionResult UpdateOrderStatus([FromBody] string orderCode)
+    public IActionResult UpdateOrderStatus([FromRoute] string orderCode)
     {
         _paymentService.UpdateStatusOrder(orderCode);
         return Ok("Payment status updated successfully.");
