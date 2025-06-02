@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,11 +14,9 @@ namespace Domain.Entities
         public long Id { get; init; }
         public string OrderCode { get; init; } = GenerateOrderCode();
         public UserEntity? User { get; set; }
-        public List<BurgerEntity> BurgerList { get; set; }
-        public List<BeverageEntity> Beverages { get; set; }
-        public List<DessertEntity> Desserts { get; set; }
+        public List<ProductEntity> ProductList { get; set; }
         public decimal TotalPrice { get; set; }
-        public string Status { get; set; } // e.g., "Pending", "Completed", "Cancelled"
+        public OrderStatus Status { get; set; }
         public DateTime Expiration { get; init; } = DateTime.UtcNow.AddHours(1); // Order expires in 1 hour
 
         private static string GenerateOrderCode()
@@ -28,14 +27,8 @@ namespace Domain.Entities
         public void CalculateTotalPrice()
         {
             decimal total = 0;
-            if (BurgerList != null)
-                total += BurgerList.Sum(item => item.Price);
-
-            if (Beverages != null)
-                total += Beverages.Sum(item => item.Price);
-
-            if (Desserts != null)
-                total += Desserts.Sum(item => item.Price);
+            if (ProductList != null)
+                total += ProductList.Sum(item => item.Price);
 
             TotalPrice = total;
         }

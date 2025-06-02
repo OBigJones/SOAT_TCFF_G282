@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using Application.Pag;
 using Domain.Entities;
 using Infra.Pag.Request;
 using Infra.Pag.Response;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Infra.Pag;
 
-public class MercadoPagoClient
+public class MercadoPagoClient : IMercadoPagoClient
 {
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
@@ -21,7 +22,7 @@ public class MercadoPagoClient
         _configuration = configuration;
     }
     
-    public async Task<PaymentResponse> CreatePaymentAsync(OrderEntity order)
+    public async Task<string> CreatePaymentAsync(OrderEntity order)
     {
         var payload = new MercadoPagoPayload
         {
@@ -64,7 +65,8 @@ public class MercadoPagoClient
 
         var response = await SendAsync(HttpMethod.Post, apiUrl, jsonPayload);
         var content = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<PaymentResponse>(content);
+        var paymentResponse = JsonSerializer.Deserialize<PaymentResponse>(content);
+        return paymentResponse.PointOfInteraction.TransactionData.QrCode;
     }
 
     private async Task<HttpResponseMessage> SendAsync(HttpMethod method, string url, string jsonPayload = null)

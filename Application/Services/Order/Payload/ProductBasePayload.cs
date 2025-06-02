@@ -1,6 +1,6 @@
 namespace Application.Services.Order.Payload;
 
-public class ProducBasePayload
+public class ProductBasePayload
 {
     public long Id { get; set; }
     public string Name { get; set; }

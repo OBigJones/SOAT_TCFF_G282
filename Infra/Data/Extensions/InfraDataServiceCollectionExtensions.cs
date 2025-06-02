@@ -1,5 +1,7 @@
 ﻿using System.Configuration;
+using Application.Pag;
 using Application.Repository;
+using Infra.Pag;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,8 @@ namespace Infra.Data.Extensions
             services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();    
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IMercadoPagoClient, MercadoPagoClient>();
 
             return services;
         }

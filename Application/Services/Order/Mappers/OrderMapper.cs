@@ -10,8 +10,28 @@ namespace Application.Services.Order.Mappers
         {
             return new OrderResponse
             {
-                OrderCode = entity.OrderCode
+                OrderCode = entity.OrderCode,
+                CustomerName = entity.User?.Nome ?? "Unknown",
+                ProductList = entity.ProductList
+                    .Select(productEntity => new ProductBasePayload
+                    {
+                        Id = productEntity.Id,
+                        Name = productEntity.Name,
+                        Description = productEntity.Description,
+                        Price = productEntity.Price
+                    }).ToList()
             };
+        }
+
+        public static List<OrderResponse> ToResponseList(List<OrderEntity> entities)
+        {
+            var responses = new List<OrderResponse>();
+            foreach (var entity in entities)
+            {
+                responses.Add(ToResponse(entity));
+            }
+
+            return responses;
         }
 
         public static OrderPayload ToPayload(OrderEntity entity)
@@ -21,29 +41,13 @@ namespace Application.Services.Order.Mappers
                 Id = entity.Id,
                 CustomerName = entity.User?.Nome,
                 OrderCode = entity.OrderCode,
-                BurgerList = entity.BurgerList
-                    .Select(burgerEntity => new ProducBasePayload
+                BurgerList = entity.ProductList
+                    .Select(productEntity => new ProductBasePayload
                     {
-                        Id = burgerEntity.Id,
-                        Name = burgerEntity.Name,
-                        Description = burgerEntity.Description,
-                        Price = burgerEntity.Price,
-                    }).ToList(),
-                Beverages = entity.Beverages
-                    .Select(beverageEntity => new ProducBasePayload
-                    {
-                        Id = beverageEntity.Id,
-                        Name = beverageEntity.Name,
-                        Description = beverageEntity.Description,
-                        Price = beverageEntity.Price
-                    }).ToList(),
-                Desserts = entity.Desserts
-                    .Select(dessertEntity => new ProducBasePayload
-                    {
-                        Id = dessertEntity.Id,
-                        Name = dessertEntity.Name,
-                        Description = dessertEntity.Description,
-                        Price = dessertEntity.Price
+                        Id = productEntity.Id,
+                        Name = productEntity.Name,
+                        Description = productEntity.Description,
+                        Price = productEntity.Price,
                     }).ToList(),
                 TotalPrice = entity.TotalPrice,
                 Status = entity.Status,
@@ -57,21 +61,7 @@ namespace Application.Services.Order.Mappers
             {
                 Id = payload.Id,
                 OrderCode = payload.OrderCode,
-                BurgerList = payload.BurgerList.Select(basePayload => new BurgerEntity
-                {
-                    Id = basePayload.Id,
-                    Name = basePayload.Name,
-                    Description = basePayload.Description,
-                    Price = basePayload.Price
-                }).ToList(),
-                Beverages = payload.Beverages.Select(basePayload => new BeverageEntity
-                {
-                    Id = basePayload.Id,
-                    Name = basePayload.Name,
-                    Description = basePayload.Description,
-                    Price = basePayload.Price
-                }).ToList(),
-                Desserts = payload.Desserts.Select(basePayload => new DessertEntity
+                ProductList = payload.BurgerList.Select(basePayload => new ProductEntity
                 {
                     Id = basePayload.Id,
                     Name = basePayload.Name,

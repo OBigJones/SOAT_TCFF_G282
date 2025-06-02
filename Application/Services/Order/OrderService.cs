@@ -2,6 +2,7 @@
 using Application.Services.Order.Mappers;
 using Application.Services.Order.Payload;
 using Application.Services.Order.Response;
+using Domain.Enums;
 
 namespace Application.Services.Order
 {
@@ -26,27 +27,18 @@ namespace Application.Services.Order
             return OrderMapper.ToResponse(orderEntity);
         }
 
-        public async Task<IEnumerable<OrderResponse>> GetOrdersByStatusAsync(string status)
+        public async Task<IEnumerable<OrderResponse>> GetOrdersByStatusAsync(OrderStatus status)
         {
-            if (string.IsNullOrEmpty(status))
-            {
-                throw new ArgumentException("Status cannot be null or empty.", nameof(status));
-            }
             var orders = await orderRepository.GetOrdersByStatusAsync(status);
             if (orders == null || !orders.Any())
             {
                 return Enumerable.Empty<OrderResponse>();
             }
-            // return _mapper.Map<IEnumerable<OrderResponse>>(orders);
-            return null;
+            return OrderMapper.ToResponseList(orders);
         }
 
-        public async Task<bool> UpdateOrderStatusAsync(string orderCode, string newStatus)
+        public async Task<bool> UpdateOrderStatusAsync(string orderCode, OrderStatus newStatus)
         {
-            if (string.IsNullOrEmpty(newStatus))
-            {
-                throw new ArgumentException("New status cannot be null or empty.", nameof(newStatus));
-            }
             return await orderRepository.UpdateOrderStatusAsync(orderCode, newStatus);
         }
     }
