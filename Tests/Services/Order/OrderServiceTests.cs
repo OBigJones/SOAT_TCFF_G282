@@ -16,12 +16,13 @@ namespace Tests.Services.Order
     public class OrderServiceTests
     {
         private readonly Mock<IOrderRepository> _orderRepositoryMock;
+        private readonly Mock<IUserRepository> _userRepositoryMock;
         private readonly OrderService _orderService;
 
         public OrderServiceTests()
         {
             _orderRepositoryMock = new Mock<IOrderRepository>();
-            _orderService = new OrderService(_orderRepositoryMock.Object);
+            _orderService = new OrderService(_orderRepositoryMock.Object, _userRepositoryMock.Object);
         }
 
         [Fact]
@@ -40,12 +41,12 @@ namespace Tests.Services.Order
                 CustomerName = "Cliente Teste",
                 BurgerList = new List<ProductBasePayload>
                 {
-                    new ProductBasePayload { Id = 1, Name = "Burger", Description = "Desc", Price = 10 }
+                    new ProductBasePayload { Name = "Burger", Description = "Desc", Price = 10 }
                 },
                 Status = OrderStatus.Received
             };
 
-            // O mapeamento real não é testado aqui, pois OrderMapper é estático.
+            // O mapeamento real nï¿½o ï¿½ testado aqui, pois OrderMapper ï¿½ estï¿½tico.
             _orderRepositoryMock
                 .Setup(r => r.CreateOrderAsync(It.IsAny<OrderEntity>()))
                 .ReturnsAsync(false);

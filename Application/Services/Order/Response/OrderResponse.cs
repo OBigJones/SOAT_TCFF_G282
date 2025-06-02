@@ -6,6 +6,6 @@ namespace Application.Services.Order.Response
     {
         public string OrderCode { get; set; }
         public string CustomerName { get; set; }
-        public List<ProductBasePayload> ProductList { get; set; }
+        public List<ProductBaseResponse> ProductList { get; set; }
     }
 }
