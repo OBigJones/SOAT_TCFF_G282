@@ -40,7 +40,7 @@ namespace Infra.Data
 
         public async Task<bool> UpdateOrderStatusAsync(string orderCode, OrderStatus newStatus)
         {
-            var order = await _context.Orders.FindAsync(orderCode);
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.OrderCode == orderCode);
             if (order == null)
             {
                 return false; // Order not found
@@ -49,6 +49,17 @@ namespace Infra.Data
             _context.Orders.Update(order);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<OrderEntity?> GetOrderByCode(string orderCode)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.OrderCode == orderCode);
+            if (order == null)
+            {
+                return null;
+            }
+            
+            return order;
         }
     }
 }

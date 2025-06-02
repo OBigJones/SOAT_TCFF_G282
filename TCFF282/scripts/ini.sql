@@ -13,7 +13,7 @@ CREATE TABLE `orders` (
     OrderCode VARCHAR(255) NOT NULL UNIQUE,
     UserId BIGINT UNSIGNED NULL,
     TotalPrice DECIMAL(18, 2) NOT NULL,
-    Status VARCHAR(50) NOT NULL DEFAULT 'Received',
+    Status ENUM('Received', 'InPreparation', 'Ready', 'Finished') NOT NULL,
     Expiration DATETIME NOT NULL,
     FOREIGN KEY (UserId) REFERENCES users(Id)
 );

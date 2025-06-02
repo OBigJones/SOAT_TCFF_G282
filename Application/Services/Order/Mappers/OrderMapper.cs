@@ -65,6 +65,7 @@ namespace Application.Services.Order.Mappers
                 {
                     Id = basePayload.Id,
                     Name = basePayload.Name,
+                    Type = basePayload.Type,
                     Description = basePayload.Description,
                     Price = basePayload.Price,
                     Quantity = 1,

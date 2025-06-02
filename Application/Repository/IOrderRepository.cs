@@ -9,5 +9,6 @@ namespace Application.Repository
         Task<List<OrderEntity>> GetActiveOrders();
         Task<List<OrderEntity>> GetOrdersByStatusAsync(OrderStatus status);
         Task<bool> UpdateOrderStatusAsync(string orderCode, OrderStatus newStatus);
+        Task<OrderEntity?> GetOrderByCode(string orderCode);
     }
 }
