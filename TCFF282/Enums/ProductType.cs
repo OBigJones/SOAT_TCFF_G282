@@ -1,9 +1,14 @@
-﻿namespace Domain.Enums
+﻿using System.ComponentModel;
+
+namespace Domain.Enums
 {
     public enum ProductType
     {
-        BURGUER,
-        BEVERAGE,
-        DESSERT
+        [Description("hamburger")]
+        Burger = 1,
+        [Description("Bebida")]
+        Beverage = 2,
+        [Description("Sobremesa")]
+        Dessert = 3
     }
 }

@@ -36,7 +36,7 @@ namespace API.Controllers
             {
                 return NotFound("No orders found with the specified status.");
             }
-            return Ok(orders);
+            return Ok(orders.Result);
         }
 
         [HttpPost("UpdateOrderStatus")]

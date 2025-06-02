@@ -29,9 +29,9 @@ namespace Application.Services.Products.Mappers
             if (products == null || !products.Any()) return new MenuInfo();
             var menu = new MenuInfo
             {
-                Burgers = products.Where(p => p.Type == Domain.Enums.ProductType.BURGUER).ToProductInfoList().ToList(),
-                Beverages = products.Where(p => p.Type == Domain.Enums.ProductType.BEVERAGE).ToProductInfoList().ToList(),
-                Desserts = products.Where(p => p.Type == Domain.Enums.ProductType.DESSERT).ToProductInfoList().ToList()
+                Burgers = products.Where(p => p.Type == Domain.Enums.ProductType.Burger).ToProductInfoList().ToList(),
+                Beverages = products.Where(p => p.Type == Domain.Enums.ProductType.Beverage).ToProductInfoList().ToList(),
+                Desserts = products.Where(p => p.Type == Domain.Enums.ProductType.Dessert).ToProductInfoList().ToList()
             };
             return menu;
         }
