@@ -1,31 +1,73 @@
+# docker-compose.yml
+version: '3.8' # Adiciona a versão do Docker Compose
+
+# Define os volumes que serão usados pelos serviços
 volumes:
   mysql_data:
-    name: mysql_fiap
+    name: mysql_fiap # Nome explícito para o volume (opcional, mas bom)
 
+# Define os serviços da sua aplicação
 services:
   database:
     image: mysql:8.0
-    restart: always
-    ports: # remover porta do mysql pois só foi gerada para visualização
+    container_name: meuapp_mysql # Nome amigável para o container
+    restart: always # O container sempre tentará reiniciar se parar
+    ports:
+      # Mapeia a porta 3306 do host (sua máquina) para a porta 3306 do container MySQL
+      # Remova esta linha se não precisar acessar o MySQL diretamente do seu host
       - "3306:3306"
     environment:
+      # As variáveis são lidas do arquivo .env ou do ambiente do seu shell
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql # Persiste os dados do MySQL
+      # Monta o seu script SQL para inicialização do banco de dados
       - "./scripts/ini.sql:/docker-entrypoint-initdb.d/ini.sql"
-#  app:
-#    depends_on:
-#      - database
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports: # porta da aplicação após decisão alterar
-#      - 5000:80
-#    environment:
-#      MYSQL_DB_HOST: ${MYSQL_DB_HOST}
-#      MYSQL_DB_USER: ${MYSQL_DB_USER}
-#      MYSQL_DB_PASSWORD: ${MYSQL_DB_PASSWORD}
-#      MYSQL_DB_NAME: ${MYSQL_DB_NAME}
+    healthcheck: # Adiciona um healthcheck para garantir que o MySQL esteja pronto
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      interval: 10s # Checa a cada 10 segundos
+      timeout: 5s   # Espera no máximo 5 segundos pela resposta
+      retries: 5    # Tenta 5 vezes antes de considerar falha
+      start_period: 30s # Espera 30 segundos antes de começar os checks (tempo para o MySQL subir)
+
+  # Este é o seu serviço de API/Aplicação (agora descomentado e configurado)
+  api:
+    build:
+      context: ./API # Assumindo que seu Dockerfile está na pasta 'API'
+      dockerfile: Dockerfile # Nome do Dockerfile dentro da pasta 'API'
+    container_name: meuapp_api # Nome amigável para o container
+    restart: on-failure # Restarta se o container sair com erro
+    ports:
+      # Mapeia a porta 5000 do host para a porta 80 do container (se sua API roda na porta 80 interna)
+      # Ajuste '80' para a porta real que sua aplicação usa dentro do container
+      - "5000:80" # Exemplo: 5000 no host, 80 no container
+    environment:
+      # Variáveis que sua API usará para se conectar ao MySQL
+      DB_HOST: database # O nome do serviço 'database' é o hostname dentro da rede Docker
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      # Adicione outras variáveis de ambiente que sua API precisar (ex: NODE_ENV, API_KEY)
+    depends_on:
+      # A API SÓ inicia depois que o serviço 'database' estiver healthy (pronto)
+      database:
+        condition: service_healthy
+    volumes:
+      # Exemplo de volume: se sua API precisar de arquivos locais ou logs persistentes
+      # - ./API:/app # Monta o diretório da API para desenvolvimento (cuidado em produção)
+      # - api_logs:/app/logs # Exemplo de volume para logs
+      pass
+
+# Se você tiver mais serviços (web, frontend, redis, etc.), adicione-os aqui
+# web:
+#   build:
+#     context: ./web
+#     dockerfile: Dockerfile
+#   ports:
+#     - "80:80"
+#   depends_on:
+#     - api
