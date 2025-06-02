@@ -16,7 +16,7 @@ namespace Application.Services.Order
             }
 
             var orderEntity = OrderMapper.ToEntity(orderDetails);
-            orderEntity.Status = OrderStatus.Received;
+            orderEntity.Status = OrderStatus.Created;
             orderEntity.CalculateTotalPrice();
 
             var result = await orderRepository.CreateOrderAsync(orderEntity);

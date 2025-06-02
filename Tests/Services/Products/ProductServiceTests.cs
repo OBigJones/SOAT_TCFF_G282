@@ -29,7 +29,7 @@ namespace Tests.Services.Products
             // Arrange
             var entities = new List<ProductEntity>
             {
-                new ProductEntity { Id = 1, Name = "Burger", Description = "Desc", Price = 10, Quantity = 5, Type = ProductType.BURGUER }
+                new ProductEntity { Id = 1, Name = "Burger", Description = "Desc", Price = 10, Quantity = 5, Type = ProductType.Burger }
             };
             _productRepositoryMock.Setup(r => r.GetAllProductsAsync()).ReturnsAsync(entities);
 
@@ -48,7 +48,7 @@ namespace Tests.Services.Products
             // Arrange
             var entities = new List<ProductEntity>
             {
-                new ProductEntity { Id = 2, Name = "Bebida", Description = "Refri", Price = 5, Quantity = 10, Type = ProductType.BEVERAGE }
+                new ProductEntity { Id = 2, Name = "Bebida", Description = "Refri", Price = 5, Quantity = 10, Type = ProductType.Beverage }
             };
             _productRepositoryMock.Setup(r => r.GetProductsInStockAsync()).ReturnsAsync(entities);
 
@@ -67,9 +67,9 @@ namespace Tests.Services.Products
             // Arrange
             var entities = new List<ProductEntity>
             {
-                new ProductEntity { Id = 1, Name = "Burger", Description = "Desc", Price = 10, Quantity = 5, Type = ProductType.BURGUER },
-                new ProductEntity { Id = 2, Name = "Bebida", Description = "Refri", Price = 5, Quantity = 10, Type = ProductType.BEVERAGE },
-                new ProductEntity { Id = 3, Name = "Sobremesa", Description = "Doce", Price = 7, Quantity = 3, Type = ProductType.DESSERT }
+                new ProductEntity { Id = 1, Name = "Burger", Description = "Desc", Price = 10, Quantity = 5, Type = ProductType.Burger },
+                new ProductEntity { Id = 2, Name = "Bebida", Description = "Refri", Price = 5, Quantity = 10, Type = ProductType.Beverage },
+                new ProductEntity { Id = 3, Name = "Sobremesa", Description = "Doce", Price = 7, Quantity = 3, Type = ProductType.Dessert }
             };
             _productRepositoryMock.Setup(r => r.GetAllProductsAsync()).ReturnsAsync(entities);
 
@@ -104,7 +104,7 @@ namespace Tests.Services.Products
                 Description = "Desc",
                 Price = 10,
                 Stock = 5,
-                Type = ProductType.BURGUER
+                Type = ProductType.Burger
             };
             _productRepositoryMock.Setup(r => r.UpdateProductAsync(It.IsAny<ProductEntity>())).ReturnsAsync(true);
 

@@ -4,16 +4,19 @@ namespace Domain.Enums
 {
     public enum OrderStatus
     {
+        [Description("Criado")]
+        Created = 1,
+        
         [Description("Recebido")]
-        Received = 1,
+        Received = 2,
 
         [Description("Em preparação")]
-        InPreparation = 2,
+        InPreparation = 3,
 
         [Description("Pronto")]
-        Ready = 3,
+        Ready = 4,
 
         [Description("Finalizado")]
-        Finished = 4
+        Finished = 5
     }
 }

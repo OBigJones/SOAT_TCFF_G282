@@ -32,7 +32,12 @@ public class PaymentController : ControllerBase
     [HttpPost("{orderCode}/payed")]
     public IActionResult UpdateOrderStatus([FromRoute] string orderCode)
     {
-        _paymentService.UpdateStatusOrder(orderCode);
+        var result = _paymentService.UpdateStatusOrder(orderCode);
+        if (!result.Result)
+        {
+            return NotFound("Order not found or status update failed.");
+        }
+        
         return Ok("Payment status updated successfully.");
     }
 }

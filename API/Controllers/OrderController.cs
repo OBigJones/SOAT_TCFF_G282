@@ -25,7 +25,7 @@ namespace API.Controllers
             }
             var result = _orderService.CreateOrderAsync(orderDetails);
 
-            return Ok(result);
+            return Ok(result.Result);
         }
 
         [HttpGet("GetOrderByStatus")]
