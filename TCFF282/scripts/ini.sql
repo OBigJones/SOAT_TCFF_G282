@@ -2,9 +2,9 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE users (
    Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-   Nome VARCHAR(255),
-   CPF VARCHAR(11),
-   Email VARCHAR(255)
+   Nome VARCHAR(255) NOT NULL,
+   CPF VARCHAR(11) NOT NULL,
+   Email VARCHAR(255) NOT NULL UNIQUE 
 );
 
 DROP TABLE IF EXISTS `orders`;
@@ -13,7 +13,7 @@ CREATE TABLE `orders` (
     OrderCode VARCHAR(255) NOT NULL UNIQUE,
     UserId BIGINT UNSIGNED NULL,
     TotalPrice DECIMAL(18, 2) NOT NULL,
-    Status ENUM('Received', 'InPreparation', 'Ready', 'Finished') NOT NULL,
+    Status ENUM('Created', 'Received', 'InPreparation', 'Ready', 'Finished') NOT NULL,
     Expiration DATETIME NOT NULL,
     FOREIGN KEY (UserId) REFERENCES users(Id)
 );

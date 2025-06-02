@@ -2,8 +2,9 @@ using Domain.Enums;
 
 namespace Application.Services.Order.Payload;
 
-public class ProductBasePayload
+public class ProductBaseResponse
 {
+    public long Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public decimal Price { get; set; }

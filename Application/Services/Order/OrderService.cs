@@ -6,7 +6,7 @@ using Domain.Enums;
 
 namespace Application.Services.Order
 {
-    public class OrderService(IOrderRepository orderRepository) : IOrderService
+    public class OrderService(IOrderRepository orderRepository, IUserRepository userRepository) : IOrderService
     {
         public async Task<OrderResponse> CreateOrderAsync(OrderPayload orderDetails)
         {
@@ -16,11 +16,15 @@ namespace Application.Services.Order
             }
 
             var orderEntity = OrderMapper.ToEntity(orderDetails);
-            orderEntity.Status = OrderStatus.Received;
+            var user = await userRepository.IdentificationAsync(orderDetails.CustomerCpf);
+            if(user != null) 
+                orderEntity.User = user;
+
+            orderEntity.Status = OrderStatus.Created;
             orderEntity.CalculateTotalPrice();
 
-            var result = orderRepository.CreateOrderAsync(orderEntity);
-            if (!result.Result)
+            var result = await orderRepository.CreateOrderAsync(orderEntity);
+            if (!result)
             {
                 throw new Exception("Failed to create order.");
             }

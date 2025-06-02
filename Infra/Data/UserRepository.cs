@@ -23,14 +23,23 @@ namespace Infra.Data
             }
         }
 
-        public async Task<bool> VerifyUserExistsByDocument(string document)
+        public async Task<bool> VerifyUserExistsByDocument(string cpf)
         {
-            return await _context.Users.AnyAsync(u => u.CPF == document);
+            return await _context.Users.AnyAsync(u => u.CPF == cpf);
+        }
+        
+        public async Task<bool> VerifyUserExistsByEmail(string email)
+        {
+            return await _context.Users.AnyAsync(u => u.Email == email);
         }
 
-        public async Task<UserEntity?> IdentificationAsync(string document)
+        public async Task<UserEntity?> IdentificationAsync(string cpfOrEmail)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.CPF == document);
+            var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.CPF == cpfOrEmail);
+            if (userEntity != null)
+                return userEntity;
+            
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == cpfOrEmail);
         }
     }
 }

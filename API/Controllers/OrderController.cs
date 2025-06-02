@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("[controller]")]
+    [Route("orders")]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace API.Controllers
             _orderService = orderService;
         }
 
-        [HttpPost("CreateOrder")]
+        [HttpPost]
         public IActionResult CreateOrder([FromBody] OrderPayload orderDetails)
         {
             if (orderDetails == null)
@@ -25,10 +25,10 @@ namespace API.Controllers
             }
             var result = _orderService.CreateOrderAsync(orderDetails);
 
-            return Ok(result);
+            return Ok(result.Result);
         }
 
-        [HttpGet("GetOrderByStatus")]
+        [HttpGet("status")]
         public IActionResult GetOrderByStatus([FromQuery] OrderStatus status)
         {
             var orders = _orderService.GetOrdersByStatusAsync(status);
@@ -36,11 +36,11 @@ namespace API.Controllers
             {
                 return NotFound("No orders found with the specified status.");
             }
-            return Ok(orders);
+            return Ok(orders.Result);
         }
 
-        [HttpPost("UpdateOrderStatus")]
-        public IActionResult UpdateOrderStatus([FromBody] string orderCode, OrderStatus status)
+        [HttpPut("{orderCode}")]
+        public IActionResult UpdateOrderStatus([FromRoute] string orderCode, [FromBody] OrderStatus status)
         {
             var result = _orderService.UpdateOrderStatusAsync(orderCode, status);
             if (!result.Result)

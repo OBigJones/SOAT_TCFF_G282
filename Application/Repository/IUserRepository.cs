@@ -6,8 +6,10 @@ namespace Application.Repository
     {
         Task<bool> CreateAccountAsync(UserEntity user);
 
-        Task<bool> VerifyUserExistsByDocument(string document);
+        Task<bool> VerifyUserExistsByDocument(string cpf);
+        
+        Task<bool> VerifyUserExistsByEmail(string email);
 
-        Task<UserEntity?> IdentificationAsync(string document);
+        Task<UserEntity?> IdentificationAsync(string cpfOrEmail);
     }
 }

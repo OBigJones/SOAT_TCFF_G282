@@ -25,13 +25,13 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpGet("{cpf}")]
-        public async Task<IActionResult> GetUserByIdentification([FromRoute] string cpf)
+        [HttpGet("{cpfOrEmail}")]
+        public async Task<IActionResult> GetUserByIdentification([FromRoute] string cpfOrEmail)
         {
-            if (string.IsNullOrEmpty(cpf))
-                return BadRequest("CPF não pode ser vazio.");
+            if (string.IsNullOrEmpty(cpfOrEmail))
+                return BadRequest("CPF ou email não pode ser vazio.");
 
-            var payload = await _userService.IdentificationAsync(cpf);
+            var payload = await _userService.IdentificationAsync(cpfOrEmail);
 
             if (payload == null)
                 return NotFound("Usuário não encontrado.");

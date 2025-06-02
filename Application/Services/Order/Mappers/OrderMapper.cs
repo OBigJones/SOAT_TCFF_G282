@@ -13,7 +13,7 @@ namespace Application.Services.Order.Mappers
                 OrderCode = entity.OrderCode,
                 CustomerName = entity.User?.Nome ?? "Unknown",
                 ProductList = entity.ProductList
-                    .Select(productEntity => new ProductBasePayload
+                    .Select(productEntity => new ProductBaseResponse
                     {
                         Id = productEntity.Id,
                         Name = productEntity.Name,
@@ -38,13 +38,11 @@ namespace Application.Services.Order.Mappers
         {
             return new OrderPayload
             {
-                Id = entity.Id,
                 CustomerName = entity.User?.Nome,
-                OrderCode = entity.OrderCode,
+                CustomerCpf = entity.User?.CPF,
                 BurgerList = entity.ProductList
                     .Select(productEntity => new ProductBasePayload
                     {
-                        Id = productEntity.Id,
                         Name = productEntity.Name,
                         Description = productEntity.Description,
                         Price = productEntity.Price,
@@ -59,11 +57,8 @@ namespace Application.Services.Order.Mappers
         {
             return new OrderEntity
             {
-                Id = payload.Id,
-                OrderCode = payload.OrderCode,
                 ProductList = payload.BurgerList.Select(basePayload => new ProductEntity
                 {
-                    Id = basePayload.Id,
                     Name = basePayload.Name,
                     Type = basePayload.Type,
                     Description = basePayload.Description,

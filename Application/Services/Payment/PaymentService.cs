@@ -15,12 +15,12 @@ public class PaymentService(IOrderRepository orderRepository, IMercadoPagoClient
             throw new Exception("Order not found!");
         }
 
-        var paymentAsync = mercadoPagoClient.CreatePaymentAsync(order);
-        return paymentAsync.Result;
+        var paymentAsync = await mercadoPagoClient.CreatePaymentAsync(order);
+        return paymentAsync;
     }
 
-    public async Task UpdateStatusOrder(string orderCode)
+    public async Task<bool> UpdateStatusOrder(string orderCode)
     {
-        await orderService.UpdateOrderStatusAsync(orderCode, OrderStatus.Received);
+        return await orderService.UpdateOrderStatusAsync(orderCode, OrderStatus.Received);
     }
 }

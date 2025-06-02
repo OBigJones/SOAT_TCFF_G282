@@ -5,9 +5,8 @@ namespace Application.Services.Order.Payload
 {
     public class OrderPayload
     {
-        public long Id { get; set; }
         public string? CustomerName { get; set; }
-        public string OrderCode { get; init; }
+        public string? CustomerCpf { get; set; }
         public List<ProductBasePayload> BurgerList { get; set; }
         public decimal TotalPrice { get; set; }
         public OrderStatus Status { get; set; }
