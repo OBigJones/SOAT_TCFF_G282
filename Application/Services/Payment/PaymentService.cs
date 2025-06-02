@@ -5,34 +5,22 @@ using Domain.Enums;
 
 namespace Application.Services.Payment;
 
-public class PaymentService : IPaymentService
+public class PaymentService(IOrderRepository orderRepository, IMercadoPagoClient mercadoPagoClient, IOrderService orderService) : IPaymentService
 {
-    private readonly IMercadoPagoClient _mercadoPagoClient;
-    private readonly IOrderRepository _orderRepository;
-    private readonly IOrderService _orderService;
-    
-    public PaymentService(IMercadoPagoClient mercadoPagoClient, IOrderRepository orderRepository, IOrderService orderService)
-    {
-        _mercadoPagoClient = mercadoPagoClient;
-        _orderRepository = orderRepository;
-        _orderService = orderService;
-    }
-
-
     public async Task<string> GenerateQrCode(string orderCode)
     {
-        var order = await _orderRepository.GetOrderByCode(orderCode);
+        var order = await orderRepository.GetOrderByCode(orderCode);
         if (order == null)
         {
             throw new Exception("Order not found!");
         }
 
-        var paymentAsync = _mercadoPagoClient.CreatePaymentAsync(order);
+        var paymentAsync = mercadoPagoClient.CreatePaymentAsync(order);
         return paymentAsync.Result;
     }
 
     public async Task UpdateStatusOrder(string orderCode)
     {
-        await _orderService.UpdateOrderStatusAsync(orderCode, OrderStatus.Received);
+        await orderService.UpdateOrderStatusAsync(orderCode, OrderStatus.Received);
     }
 }

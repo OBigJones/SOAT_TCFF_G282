@@ -17,7 +17,7 @@ public class PaymentController : ControllerBase
         _paymentService = paymentService;
     }
 
-    [HttpPost("{orderId}}")]
+    [HttpPost("{orderCode}")]
     public IActionResult GenerateQrCode([FromRoute] string orderCode)
     {
         if (orderCode == null)
@@ -29,7 +29,7 @@ public class PaymentController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("payed")]
+    [HttpPost("{orderCode}/payed")]
     public IActionResult UpdateOrderStatus([FromBody] string orderCode)
     {
         _paymentService.UpdateStatusOrder(orderCode);
