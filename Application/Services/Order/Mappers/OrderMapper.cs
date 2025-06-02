@@ -66,7 +66,8 @@ namespace Application.Services.Order.Mappers
                     Id = basePayload.Id,
                     Name = basePayload.Name,
                     Description = basePayload.Description,
-                    Price = basePayload.Price
+                    Price = basePayload.Price,
+                    Quantity = 1,
                 }).ToList()
             };
         }
