@@ -10,7 +10,8 @@ namespace Infra.Data
 
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<OrderEntity> Orders { get; set; }
-        
+        public DbSet<ProductEntity> Products { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -18,18 +19,8 @@ namespace Infra.Data
             modelBuilder.Entity<OrderEntity>(entity =>
             {
                 entity.HasOne(o => o.User).WithMany().HasForeignKey("UserId"); 
-                entity.HasMany(o => o.BurgerList)
+                entity.HasMany(o => o.ProductList)
                     .WithOne(b => b.Order)
-                    .HasForeignKey("OrderId")
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasMany(o => o.Beverages)
-                    .WithOne(b => b.Order)
-                    .HasForeignKey("OrderId")
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasMany(o => o.Desserts)
-                    .WithOne(d => d.Order)
                     .HasForeignKey("OrderId")
                     .OnDelete(DeleteBehavior.Cascade);
             });

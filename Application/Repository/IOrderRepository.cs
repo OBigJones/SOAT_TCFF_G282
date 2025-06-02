@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.Repository
 {
@@ -6,7 +7,7 @@ namespace Application.Repository
     {
         Task<bool> CreateOrderAsync(OrderEntity order);
         Task<List<OrderEntity>> GetActiveOrders();
-        Task<List<OrderEntity>> GetOrdersByStatusAsync(string status);
-        Task<bool> UpdateOrderStatusAsync(string orderCode, string newStatus);
+        Task<List<OrderEntity>> GetOrdersByStatusAsync(OrderStatus status);
+        Task<bool> UpdateOrderStatusAsync(string orderCode, OrderStatus newStatus);
     }
 }
