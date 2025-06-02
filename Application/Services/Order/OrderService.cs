@@ -19,8 +19,8 @@ namespace Application.Services.Order
             orderEntity.Status = OrderStatus.Received;
             orderEntity.CalculateTotalPrice();
 
-            var result = orderRepository.CreateOrderAsync(orderEntity);
-            if (!result.Result)
+            var result = await orderRepository.CreateOrderAsync(orderEntity);
+            if (!result)
             {
                 throw new Exception("Failed to create order.");
             }

@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Data
@@ -23,6 +24,21 @@ namespace Infra.Data
                     .WithOne(b => b.Order)
                     .HasForeignKey("OrderId")
                     .OnDelete(DeleteBehavior.Cascade);
+                
+                entity.Property(e => e.Status)
+                    .HasConversion(
+                        v => v.ToString(), // Converter o enum C# para a string do ENUM no MySQL
+                        v => (OrderStatus)Enum.Parse(typeof(OrderStatus), v, true) // Converter a string do MySQL de volta para o enum C# (ignora o case)
+                    );
+            });
+            
+            modelBuilder.Entity<ProductEntity>(entity =>
+            {
+                entity.Property(e => e.Type)
+                    .HasConversion(
+                        v => v.ToString(), // Converter o enum C# para a string do ENUM no MySQL
+                        v => (ProductType)Enum.Parse(typeof(ProductType), v, true) // Converter a string do MySQL de volta para o enum C# (ignora o case)
+                    );
             });
 
         }
