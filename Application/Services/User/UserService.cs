@@ -16,13 +16,17 @@ namespace Application.Services.User
             var userAlreadyExists = await userRepository.VerifyUserExistsByDocument(user.CPF);
             if (userAlreadyExists)
                 throw new ArgumentException("Usuário já existe!");
+            
+            userAlreadyExists = await userRepository.VerifyUserExistsByEmail(user.Email);
+            if (userAlreadyExists)
+                throw new ArgumentException("Usuário já existe!");
 
             return await userRepository.CreateAccountAsync(UserMapper.ToEntity(user));
         }
 
-        public async Task<UserPayload?> IdentificationAsync(string cpf)
+        public async Task<UserPayload?> IdentificationAsync(string cpfOrEmail)
         {
-            var userEntity = await userRepository.IdentificationAsync(cpf);
+            var userEntity = await userRepository.IdentificationAsync(cpfOrEmail);
             if (userEntity == null)
                 return null;
 
