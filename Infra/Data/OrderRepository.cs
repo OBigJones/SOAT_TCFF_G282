@@ -1,5 +1,6 @@
 ﻿using Application.Repository;
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Data
@@ -26,18 +27,18 @@ namespace Infra.Data
         public async Task<List<OrderEntity>> GetActiveOrders()
         {
             return await _context.Orders
-                                 .Where(o => o.Status == "Pending")
+                                 .Where(o => o.Status == OrderStatus.Received)
                                  .ToListAsync();
         }
 
-        public async Task<List<OrderEntity>> GetOrdersByStatusAsync(string status)
+        public async Task<List<OrderEntity>> GetOrdersByStatusAsync(OrderStatus status)
         {
             return await _context.Orders
-                                 .Where(o => o.Status.Equals(status, StringComparison.OrdinalIgnoreCase))
+                                 .Where(o => o.Status == status)
                                  .ToListAsync();
         }
 
-        public async Task<bool> UpdateOrderStatusAsync(string orderCode, string newStatus)
+        public async Task<bool> UpdateOrderStatusAsync(string orderCode, OrderStatus newStatus)
         {
             var order = await _context.Orders.FindAsync(orderCode);
             if (order == null)

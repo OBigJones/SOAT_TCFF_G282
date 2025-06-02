@@ -17,6 +17,7 @@ namespace Infra.Data.Extensions
             services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();    
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             return services;
         }

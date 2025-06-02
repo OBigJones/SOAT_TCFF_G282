@@ -1,5 +1,6 @@
 ﻿using Application.Services.Order;
 using Application.Services.Order.Payload;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -28,12 +29,8 @@ namespace API.Controllers
         }
 
         [HttpGet("GetOrderByStatus")]
-        public IActionResult GetOrderByStatus([FromQuery] string status)
+        public IActionResult GetOrderByStatus([FromQuery] OrderStatus status)
         {
-            if (string.IsNullOrEmpty(status))
-            {
-                return BadRequest("Status cannot be null or empty.");
-            }
             var orders = _orderService.GetOrdersByStatusAsync(status);
             if (orders == null || !orders.Result.Any())
             {
@@ -43,12 +40,8 @@ namespace API.Controllers
         }
 
         [HttpPost("UpdateOrderStatus")]
-        public IActionResult UpdateOrderStatus([FromBody] string orderCode, string status)
+        public IActionResult UpdateOrderStatus([FromBody] string orderCode, OrderStatus status)
         {
-            if (string.IsNullOrEmpty(status) || string.IsNullOrEmpty(orderCode))
-            {
-                return BadRequest("Order code and status cannot be null or empty.");
-            }
             var result = _orderService.UpdateOrderStatusAsync(orderCode, status);
             if (!result.Result)
             {
