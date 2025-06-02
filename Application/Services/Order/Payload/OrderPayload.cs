@@ -9,8 +9,6 @@ namespace Application.Services.Order.Payload
         public string? CustomerName { get; set; }
         public string OrderCode { get; init; }
         public List<ProductBasePayload> BurgerList { get; set; }
-        public List<ProductBasePayload> Beverages { get; set; }
-        public List<ProductBasePayload> Desserts { get; set; }
         public decimal TotalPrice { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime Expiration { get; init; }
