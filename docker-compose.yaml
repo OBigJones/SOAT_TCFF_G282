@@ -6,8 +6,6 @@ services:
   database:
     image: mysql:8.0
     restart: always
-    ports: # remover porta do mysql pois só foi gerada para visualização
-      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -16,13 +14,13 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - "./scripts/ini.sql:/docker-entrypoint-initdb.d/ini.sql"
-#  app:
-#    depends_on:
-#      - database
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports: # porta da aplicação após decisão alterar
-#      - 5024:5024
-#    environment:
-#      ASPNETCORE_URLS: http://+:5024
+  app:
+    depends_on:
+      - database
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5024:5024
+    environment:
+      ASPNETCORE_URLS: http://+:5024

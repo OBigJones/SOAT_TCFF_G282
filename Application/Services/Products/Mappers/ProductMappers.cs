@@ -14,6 +14,7 @@ namespace Application.Services.Products.Mappers
                 Name = product.Name,
                 Price = product.Price,
                 Description = product.Description,
+                StockQuantity = product.Quantity,
                 Category = product.Type
             };
         }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("[controller]")]
+    [Route("products")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -15,7 +15,7 @@ namespace API.Controllers
             _productService = productService;
         }
 
-        [HttpGet("GetAllProducts")]
+        [HttpGet]
         public IActionResult GetAllProducts()
         {
             var products = _productService.GetAllProductsAsync();
@@ -26,7 +26,7 @@ namespace API.Controllers
             return Ok(products.Result);
         }
 
-        [HttpGet("GetAllProductsInStock")]
+        [HttpGet("stock")]
         public IActionResult GetAllProductsWithStock()
         {
             var products = _productService.GetAllProductsInStockAsync();
@@ -37,7 +37,7 @@ namespace API.Controllers
             return Ok(products.Result);
         }
 
-        [HttpPost("UpdateProductById")]
+        [HttpPut("update")]
         public IActionResult UpdateProductById([FromBody] ProductPayload productPayload)
         {
             if (productPayload == null)
@@ -52,7 +52,7 @@ namespace API.Controllers
             return Ok("Product updated successfully.");
         }
 
-        [HttpGet("GetMenu")]
+        [HttpGet("menu")]
         public IActionResult GetMenu()
         {
             var menu = _productService.GetMenuAsync();
