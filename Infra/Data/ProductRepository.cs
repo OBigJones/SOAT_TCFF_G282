@@ -33,7 +33,7 @@ namespace Infra.Data
             return await _context.Products.ToListAsync();
         }
 
-        public async Task<ProductEntity?> GetProductByIdAsync(Guid id)
+        public async Task<ProductEntity?> GetProductByIdAsync(long id)
         {
             return await _context.Products.FindAsync(id);
         }
@@ -52,7 +52,7 @@ namespace Infra.Data
             }
         }
 
-        public async Task<bool> DeleteProductAsync(Guid id)
+        public async Task<bool> DeleteProductAsync(long id)
         {
             var product = await GetProductByIdAsync(id);
             if (product == null) return false;

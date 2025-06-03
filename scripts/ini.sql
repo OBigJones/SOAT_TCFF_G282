@@ -18,7 +18,6 @@ CREATE TABLE `orders` (
     FOREIGN KEY (UserId) REFERENCES users(Id)
 );
 
-
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
     Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -26,6 +25,14 @@ CREATE TABLE `products` (
     Description TEXT,
     Price DECIMAL(10, 2) NOT NULL,
     Quantity INT UNSIGNED NOT NULL DEFAULT 0,
-    OrderId BIGINT UNSIGNED NULL,
     Type ENUM('Burger', 'Beverage', 'Dessert') NOT NULL
+);
+
+DROP TABLE IF EXISTS `order_items`;
+CREATE TABLE `order_items` (
+    Id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    OrderId BIGINT UNSIGNED NULL,
+    ProductId BIGINT UNSIGNED NULL,
+    FOREIGN KEY (OrderId) REFERENCES orders(Id),
+    FOREIGN KEY (ProductId) REFERENCES products(Id)
 );

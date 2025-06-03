@@ -28,7 +28,7 @@ namespace Infra.Data
         {
             return await _context.Orders
                                  .Where(o => o.Status == OrderStatus.Received)
-                                 .Include(o => o.ProductList)
+                                 .Include(o => o.OrderItems)
                                  .ToListAsync();
         }
 
@@ -36,7 +36,7 @@ namespace Infra.Data
         {
             return await _context.Orders
                                  .Where(o => o.Status == status)
-                                 .Include(o => o.ProductList)
+                                 .Include(o => o.OrderItems)
                                  .ToListAsync();
         }
 

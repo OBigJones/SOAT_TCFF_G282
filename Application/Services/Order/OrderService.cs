@@ -6,7 +6,7 @@ using Domain.Enums;
 
 namespace Application.Services.Order
 {
-    public class OrderService(IOrderRepository orderRepository, IUserRepository userRepository) : IOrderService
+    public class OrderService(IOrderRepository orderRepository, IUserRepository userRepository, IProductRepository productRepository) : IOrderService
     {
         public async Task<OrderResponse> CreateOrderAsync(OrderPayload orderDetails)
         {
@@ -19,6 +19,15 @@ namespace Application.Services.Order
             var user = await userRepository.IdentificationAsync(orderDetails.CustomerCpf);
             if(user != null) 
                 orderEntity.User = user;
+            
+            foreach (var item in orderEntity.OrderItems)
+            {
+                var product = productRepository.GetProductByIdAsync(item.ProductId);
+                if(product.Result == null) 
+                    throw new ArgumentNullException(nameof(item), "Product not found.");
+                
+                item.Product = product.Result;
+            }
 
             orderEntity.Status = OrderStatus.Created;
             orderEntity.CalculateTotalPrice();

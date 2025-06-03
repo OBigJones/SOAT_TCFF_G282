@@ -41,7 +41,7 @@ namespace Tests.Services.Order
                 CustomerName = "Cliente Teste",
                 BurgerList = new List<ProductBasePayload>
                 {
-                    new ProductBasePayload { Name = "Burger", Description = "Desc", Price = 10 }
+                    new ProductBasePayload { ProductId = 1, ProductName = "Burger" }
                 },
                 Status = OrderStatus.Received
             };

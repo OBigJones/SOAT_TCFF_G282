@@ -14,7 +14,7 @@ namespace Domain.Entities
         public long Id { get; init; }
         public string OrderCode { get; init; } = GenerateOrderCode();
         public UserEntity? User { get; set; }
-        public List<ProductEntity> ProductList { get; set; }
+        public List<OrderItemEntity> OrderItems { get; set; }
         public decimal TotalPrice { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime Expiration { get; init; } = DateTime.UtcNow.AddHours(1); // Order expires in 1 hour
@@ -27,8 +27,7 @@ namespace Domain.Entities
         public void CalculateTotalPrice()
         {
             decimal total = 0;
-            if (ProductList != null)
-                total += ProductList.Sum(item => item.Price);
+            total += OrderItems.Sum(item => item.Product.Price);
 
             TotalPrice = total;
         }

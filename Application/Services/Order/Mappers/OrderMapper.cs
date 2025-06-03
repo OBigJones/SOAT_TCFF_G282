@@ -12,13 +12,13 @@ namespace Application.Services.Order.Mappers
             {
                 OrderCode = entity.OrderCode,
                 CustomerName = entity.User?.Nome ?? "Unknown",
-                ProductList = entity.ProductList
-                    .Select(productEntity => new ProductBaseResponse
+                ProductList = entity.OrderItems
+                    .Select(itemEntity =>  new ProductBaseResponse
                     {
-                        Id = productEntity.Id,
-                        Name = productEntity.Name,
-                        Description = productEntity.Description,
-                        Price = productEntity.Price
+                        Id = itemEntity.Product.Id,
+                        Name = itemEntity.Product.Name,
+                        Description = itemEntity.Product.Description,
+                        Price = itemEntity.Product.Price
                     }).ToList()
             };
         }
@@ -34,36 +34,13 @@ namespace Application.Services.Order.Mappers
             return responses;
         }
 
-        public static OrderPayload ToPayload(OrderEntity entity)
-        {
-            return new OrderPayload
-            {
-                CustomerName = entity.User?.Nome,
-                CustomerCpf = entity.User?.CPF,
-                BurgerList = entity.ProductList
-                    .Select(productEntity => new ProductBasePayload
-                    {
-                        Name = productEntity.Name,
-                        Description = productEntity.Description,
-                        Price = productEntity.Price,
-                    }).ToList(),
-                TotalPrice = entity.TotalPrice,
-                Status = entity.Status,
-                Expiration = entity.Expiration
-            };
-        }
-
         public static OrderEntity ToEntity(OrderPayload payload)
         {
             return new OrderEntity
             {
-                ProductList = payload.BurgerList.Select(basePayload => new ProductEntity
+                OrderItems = payload.BurgerList.Select(basePayload => new OrderItemEntity
                 {
-                    Name = basePayload.Name,
-                    Type = basePayload.Type,
-                    Description = basePayload.Description,
-                    Price = basePayload.Price,
-                    Quantity = 1,
+                    ProductId = basePayload.ProductId,
                 }).ToList()
             };
         }

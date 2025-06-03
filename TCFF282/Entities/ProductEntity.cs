@@ -19,7 +19,5 @@ namespace Domain.Entities
         public int Quantity { get; set; }
 
         public ProductType Type { get; set; }
-
-        public OrderEntity Order { get; set; }
     }
 }
