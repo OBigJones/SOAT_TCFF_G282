@@ -23,9 +23,6 @@ services:
 #      context: .
 #      dockerfile: Dockerfile
 #    ports: # porta da aplicação após decisão alterar
-#      - 5000:80
+#      - 5024:5024
 #    environment:
-#      MYSQL_DB_HOST: ${MYSQL_DB_HOST}
-#      MYSQL_DB_USER: ${MYSQL_DB_USER}
-#      MYSQL_DB_PASSWORD: ${MYSQL_DB_PASSWORD}
-#      MYSQL_DB_NAME: ${MYSQL_DB_NAME}
+#      ASPNETCORE_URLS: http://+:5024
