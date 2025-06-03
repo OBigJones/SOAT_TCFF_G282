@@ -36,10 +36,13 @@ Este projeto é composto por uma API RESTful que permite o cadastro e consulta d
 
 3. **Build e Run**:
    - Para rodar o projeto é necessario a instalação do docker e docker-compose
-   - rodar na linha de comando os seguintes comandos.
+   - rodar na linha de comando os seguintes comandos para executar o projeto pela primera vez.
+   - na pasta raiz do projeto
    - docker compose up --build
    - o projeto será executado na porta 5024
    - http://localhost:5024/swagger/index.html
+   - para rodar isso em vezes posteriores vc só precisará 
+   - docker compose up
 
 4. **Miro Event Storming DDD**
    - [DOCUMENTAÇÃO DDD MIRO](https://miro.com/app/board/uXjVIzpp7P0=/?share_link_id=391887046592)
