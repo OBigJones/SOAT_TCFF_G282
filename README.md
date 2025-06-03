@@ -35,3 +35,6 @@ Este projeto é composto por uma API RESTful que permite o cadastro e consulta d
    - Ajuste a string de conexão no `appsettings.json` do projeto API, se necessário.
 
 3. **Build e Run**:
+
+4. **Miro Event Storming DDD**
+   - https://miro.com/app/board/uXjVIzpp7P0=/
