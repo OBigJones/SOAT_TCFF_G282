@@ -81,28 +81,17 @@ namespace Infra.Data
             {
                 try
                 {
-                    foreach (var productInList in productsToDecrement)
+                    foreach (var product in productsToDecrement)
                     {
-                        var existingProduct = await _context.Products
-                                                            .AsNoTracking()
-                                                            .FirstOrDefaultAsync(p => p.Id == productInList.Id);
-
-                        if (existingProduct == null)
+                        if (product.Quantity < 0)
                         {
                             await transaction.RollbackAsync();
-                            Console.WriteLine($"Erro: Produto com Id {productInList.Id} não encontrado no estoque.");
+                            Console.WriteLine($"Erro: Estoque insuficiente para o produto '{product.Name}' (Id: {product.Id}). Necessário: {product.Quantity}, Disponível: {product.Quantity}");
                             return false;
                         }
 
-                        if (existingProduct.Quantity < productInList.Quantity)
-                        {
-                            await transaction.RollbackAsync();
-                            Console.WriteLine($"Erro: Estoque insuficiente para o produto '{existingProduct.Name}' (Id: {existingProduct.Id}). Necessário: {productInList.Quantity}, Disponível: {existingProduct.Quantity}");
-                            return false;
-                        }
-
-                        existingProduct.Quantity -= productInList.Quantity;
-                        _context.Products.Update(existingProduct);
+                        product.Quantity -= 1;
+                        _context.Products.Update(product);
                     }
 
                     await _context.SaveChangesAsync();

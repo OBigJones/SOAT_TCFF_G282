@@ -31,4 +31,7 @@ public class MercadoPagoPayload
     [JsonPropertyName("transaction_amount")]
     public decimal TransactionAmount { get; set; }
     
+    [JsonPropertyName("payer")]
+    public Payer Payer { get; set; }
+    
 }

@@ -29,6 +29,7 @@ namespace Infra.Data
             return await _context.Orders
                                  .Where(o => o.Status == OrderStatus.Received)
                                  .Include(o => o.OrderItems)
+                                 .ThenInclude(oi => oi.Product)
                                  .ToListAsync();
         }
 
@@ -37,6 +38,7 @@ namespace Infra.Data
             return await _context.Orders
                                  .Where(o => o.Status == status)
                                  .Include(o => o.OrderItems)
+                                 .ThenInclude(oi => oi.Product)
                                  .ToListAsync();
         }
 
@@ -55,7 +57,10 @@ namespace Infra.Data
 
         public async Task<OrderEntity?> GetOrderByCode(string orderCode)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.OrderCode == orderCode);
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefaultAsync(o => o.OrderCode == orderCode);
             if (order == null)
             {
                 return null;

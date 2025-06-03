@@ -57,7 +57,18 @@ public class MercadoPagoClient : IMercadoPagoClient
             Installments = 1,
             PaymentMethodId = "pix",
             StatementDescriptor = order.OrderCode,
-            TransactionAmount = order.TotalPrice
+            TransactionAmount = order.TotalPrice,
+            Payer = new Payer
+            {
+                EntityType = "individual",
+                Email = order.User?.Email,
+                Type = "customer",
+                Identification = new Identification
+                {
+                    Type = "CPF",
+                    Number = order.User?.CPF
+                }
+            }   
         };
 
         var jsonPayload = JsonSerializer.Serialize(payload);

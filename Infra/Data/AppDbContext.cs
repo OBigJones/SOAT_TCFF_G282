@@ -32,7 +32,7 @@ namespace Infra.Data
                         v => (OrderStatus)Enum.Parse(typeof(OrderStatus), v, true) // Converter a string do MySQL de volta para o enum C# (ignora o case)
                     );
             });
-            
+
             modelBuilder.Entity<ProductEntity>(entity =>
             {
                 entity.Property(e => e.Type)
