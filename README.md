@@ -46,3 +46,22 @@ Este projeto é composto por uma API RESTful que permite o cadastro e consulta d
 
 4. **Miro Event Storming DDD**
    - [DOCUMENTAÇÃO DDD MIRO](https://miro.com/app/board/uXjVIzpp7P0=/?share_link_id=391887046592)
+
+
+5. **Sugestão endpoints**
+   - *Ordem de uso:* 
+      - [POST]Users (cadastro de usuário)
+      - [GET] Users (identificação por email)
+      - [GET] Products/Menu (listagem de produtos disponíveis)
+      - [POST] Orders (envio do pedido)
+      - [POST] Payments/{OrderCode} (gerar um código de pagamento para o seu pedido)
+      - [POST] Payments/{OrderCode}/Payed (atualiza o status do seu pedido para PAGO status 2)
+      - [GET] Orders/Status (Listar pedidos por status)
+      - [PUT] Orders/{OrderCode} (atualizar o status do pedido sob demanda)
+
+6. **Enum de status de pedido**
+   - [Description("Criado")] = 1
+   - [Description("Recebido")] = 2
+   - [Description("Em preparação")] = 3
+   - [Description("Pronto")] = 4
+   - [Description("Finalizado")] = 5
