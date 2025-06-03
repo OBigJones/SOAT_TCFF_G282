@@ -23,7 +23,7 @@ namespace API.Controllers
             {
                 return NotFound("No products found.");
             }
-            return Ok(products);
+            return Ok(products.Result);
         }
 
         [HttpGet("GetAllProductsInStock")]
@@ -34,7 +34,7 @@ namespace API.Controllers
             {
                 return NotFound("No products found with stock information.");
             }
-            return Ok(products);
+            return Ok(products.Result);
         }
 
         [HttpPost("UpdateProductById")]
@@ -60,7 +60,7 @@ namespace API.Controllers
             {
                 return NotFound("Menu not found.");
             }
-            return Ok(menu);
+            return Ok(menu.Result);
         }
     }
 }
