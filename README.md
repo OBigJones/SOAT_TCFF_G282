@@ -37,4 +37,4 @@ Este projeto é composto por uma API RESTful que permite o cadastro e consulta d
 3. **Build e Run**:
 
 4. **Miro Event Storming DDD**
-   - [DOCUMENTAÇÃO DDD MIRO](https://miro.com/welcomeonboard/aHNmWC95WVY5NUJFQklxOS93T2c4RHBmSmd1YXJCVlk5ampIeXhxU245dExHbkZnQ1V6WlpmRmtCYVVBKzZkdE1mck9iNzE5dk0wbjFaelljZFVzSjhqcGVkTDV1eVZCSXhrQmQ4NHEvNjZaU3RIMkpUL0ZjcjEzVnN3Y0tkWnlBS2NFMDFkcUNFSnM0d3FEN050ekl3PT0hdjE=?share_link_id=259447021854)
+   - [DOCUMENTAÇÃO DDD MIRO](https://miro.com/app/board/uXjVIzpp7P0=/?share_link_id=391887046592)
