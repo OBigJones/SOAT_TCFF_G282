@@ -23,7 +23,7 @@ Este projeto é composto por uma API RESTful que permite o cadastro e consulta d
 - **API**: Camada de apresentação (controllers, endpoints REST).
 - **Application**: Serviços de aplicação, interfaces de repositórios, payloads e mapeamentos.
 - **Domain**: Entidades de domínio e enums.
-- **Infra**: Implementação dos repositórios e contexto de dados.
+- **Infra**: Implementação dos repositórios, contexto de dados e adaptadores externos de pagamento.
 
 ## Como Executar
 
@@ -35,6 +35,11 @@ Este projeto é composto por uma API RESTful que permite o cadastro e consulta d
    - Ajuste a string de conexão no `appsettings.json` do projeto API, se necessário.
 
 3. **Build e Run**:
+   - Para rodar o projeto é necessario a instalação do docker e docker-compose
+   - rodar na linha de comando os seguintes comandos.
+   - docker compose up --build
+   - o projeto será executado na porta 5024
+   - http://localhost:5024/swagger/index.html
 
 4. **Miro Event Storming DDD**
    - [DOCUMENTAÇÃO DDD MIRO](https://miro.com/app/board/uXjVIzpp7P0=/?share_link_id=391887046592)
