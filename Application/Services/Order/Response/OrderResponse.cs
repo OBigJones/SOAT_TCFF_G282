@@ -7,5 +7,6 @@ namespace Application.Services.Order.Response
         public string OrderCode { get; set; }
         public string CustomerName { get; set; }
         public List<ProductBaseResponse> ProductList { get; set; }
+        public decimal TotalPrice { get; set; }
     }
 }

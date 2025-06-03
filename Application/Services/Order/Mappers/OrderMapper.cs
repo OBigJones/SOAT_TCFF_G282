@@ -19,7 +19,8 @@ namespace Application.Services.Order.Mappers
                         Name = itemEntity.Product.Name,
                         Description = itemEntity.Product.Description,
                         Price = itemEntity.Product.Price
-                    }).ToList()
+                    }).ToList(),
+                TotalPrice = entity.TotalPrice
             };
         }
 
