@@ -20,9 +20,6 @@ namespace Domain.Entities
 
         public ProductType Type { get; set; }
 
-        [ForeignKey("OrderId")]
-        public long? OrderId { get; set; }
-
         public OrderEntity Order { get; set; }
     }
 }
