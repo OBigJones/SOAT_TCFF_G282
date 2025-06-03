@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Repository;
 using Application.Services.Order;
 using Application.Services.Order.Payload;
-using Application.Services.Order.Response;
-using Domain.Enums;
 using Domain.Entities;
+using Domain.Enums;
 using Moq;
 using Xunit;
 
@@ -17,12 +12,15 @@ namespace Tests.Services.Order
     {
         private readonly Mock<IOrderRepository> _orderRepositoryMock;
         private readonly Mock<IUserRepository> _userRepositoryMock;
+        private readonly Mock<IProductRepository> _productRepositoryMock;
         private readonly OrderService _orderService;
 
         public OrderServiceTests()
         {
             _orderRepositoryMock = new Mock<IOrderRepository>();
-            _orderService = new OrderService(_orderRepositoryMock.Object, _userRepositoryMock.Object);
+            _userRepositoryMock = new Mock<IUserRepository>();
+            _productRepositoryMock = new Mock<IProductRepository>();
+            _orderService = new OrderService(_orderRepositoryMock.Object, _userRepositoryMock.Object, _productRepositoryMock.Object);
         }
 
         [Fact]
@@ -35,6 +33,19 @@ namespace Tests.Services.Order
         [Fact]
         public async Task CreateOrderAsync_RepositoryReturnsFalse_ThrowsException()
         {
+            var expectedProduct = new ProductEntity
+            {
+                Id = 1,
+                Name = "Coca-Cola",
+                Description = "Soft drink",
+                Price = (decimal)50.0,
+                Type = ProductType.Beverage
+            };
+
+            _productRepositoryMock
+                .Setup(repo => repo.GetProductByIdAsync(1))
+                .ReturnsAsync(expectedProduct);
+            
             // Arrange
             var payload = new OrderPayload
             {
