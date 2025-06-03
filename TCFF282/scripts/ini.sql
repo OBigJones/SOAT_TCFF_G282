@@ -27,6 +27,5 @@ CREATE TABLE `products` (
     Price DECIMAL(10, 2) NOT NULL,
     Quantity INT UNSIGNED NOT NULL DEFAULT 0,
     OrderId BIGINT UNSIGNED NULL,
-    Type ENUM('Burger', 'Beverage', 'Dessert') NOT NULL,
-    FOREIGN KEY (OrderId) REFERENCES orders(Id) ON DELETE CASCADE
+    Type ENUM('Burger', 'Beverage', 'Dessert') NOT NULL
 );
